@@ -1,0 +1,227 @@
+@use 'sass:color';
+@use 'sass:map';
+
+// CSS变量定义
+:root {
+  // 更新颜色系统
+  --primary-color: #6d5dfc; // 更明亮的主色调
+  --primary-color-dark: #5040e5; // 主色调的深色变体，替代 color.adjust() 计算
+  --secondary-color: #9d8fff; // 柔和的次要色
+  --secondary-color-dark: #7b6ddc; // 次要色的深色变体
+  --success-color: #0cce6b; // 更亮的成功色
+  --success-color-dark: #0aa056; // 成功色的深色变体
+  --warning-color: #ff9f43; // 温暖的警告色
+  --warning-color-dark: #f08626; // 警告色的深色变体
+  --error-color: #ff5757; // 明亮的错误色
+  --error-color-dark: #e53e3e; // 错误色的深色变体
+  --info-color: #56b3ff; // 明亮的信息色
+  --info-color-dark: #3994e6; // 信息色的深色变体
+
+  // 亮色主题变量 (默认)
+  --bg-light: #f8fafc;  // 更柔和的背景色
+  --text-light: #1e293b; // 更深的文字颜色
+  --border-light: #e2e8f0; // 更精致的边框颜色
+  --border-light-dark: #c0c7d0; // 亮色边框的深色变体
+  --hover-light: rgba(109, 93, 252, 0.1); // 基于主色调的悬浮效果
+
+  // 暗色主题变量
+  --bg-dark: #121826; // 更柔和的暗色背景
+  --text-dark: #eef2ff; // 更明亮的暗色文字
+  --border-dark: #2d3748; // 更明亮的暗色边框
+  --border-dark-dark: #1a202c; // 暗色边框的深色变体
+  --hover-dark: rgba(109, 93, 252, 0.2); // 基于主色调的暗色悬浮效果
+
+  // 当前主题值（默认为亮色）
+  --background-color: var(--bg-light);
+  --text-color: var(--text-light);
+  --border-color: var(--border-light);
+  --border-color-dark: var(--border-light-dark); // 当前主题的边框深色变体
+  --hover-color: var(--hover-light);
+
+  // 字体系统 - 增加现代字体
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-code: 'JetBrains Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  
+  // 增加标题字体
+  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  // 字体大小
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem; // 新增更大字号
+  --font-size-4xl: 2.25rem;  // 新增更大字号
+  --font-size-5xl: 3rem;     // 新增更大字号
+
+  // 间距系统
+  --spacing-unit: 0.25rem;
+  --spacing-0: 0;
+  --spacing-1: var(--spacing-unit);
+  --spacing-2: calc(var(--spacing-unit) * 2);
+  --spacing-3: calc(var(--spacing-unit) * 3);
+  --spacing-4: calc(var(--spacing-unit) * 4);
+  --spacing-5: calc(var(--spacing-unit) * 5);
+  --spacing-6: calc(var(--spacing-unit) * 6);
+  --spacing-8: calc(var(--spacing-unit) * 8);
+  --spacing-10: calc(var(--spacing-unit) * 10);
+  --spacing-12: calc(var(--spacing-unit) * 12);
+  --spacing-16: calc(var(--spacing-unit) * 16);
+  --spacing-20: calc(var(--spacing-unit) * 20);
+  --spacing-24: calc(var(--spacing-unit) * 24);
+  --spacing-32: calc(var(--spacing-unit) * 32); // 新增更大间距
+
+  // 断点系统 (只用于SCSS中计算，CSS中不能直接使用)
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  // Z-index系统
+  --z-index-base: 1;
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-tooltip: 1060;
+
+  // 动画时间
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 350ms;
+
+  // 动画曲线
+  --timing-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --timing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --timing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  // 更新阴影系统，更精致
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.1); // 新增更大阴影
+
+  // 圆角系统
+  --radius-none: 0;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem; // 新增更大圆角
+  --radius-full: 9999px;
+  
+  // 新增卡片效果
+  --card-border-radius: var(--radius-lg);
+  --card-shadow: var(--shadow-md);
+  --card-hover-shadow: var(--shadow-lg);
+  --card-bg: var(--background-color);
+  --card-border: 1px solid var(--border-color);
+}
+
+// 暗色主题样式
+.dark-theme {
+  --background-color: var(--bg-dark);
+  --text-color: var(--text-dark);
+  --border-color: var(--border-dark);
+  --border-color-dark: var(--border-dark-dark);
+  --hover-color: var(--hover-dark);
+}
+
+// 保留一些SCSS变量，用于@media查询等不能使用CSS变量的场景
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// 字体系统
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-heading: $font-family-base;
+$font-family-code: 'JetBrains Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
+// 字体大小
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.875rem;
+$font-size-4xl: 2.25rem;
+$font-size-5xl: 3rem;
+
+// 间距系统
+$spacing-unit: 0.25rem;
+$spacing: (
+  '0': 0,
+  '1': $spacing-unit,
+  '2': $spacing-unit * 2,
+  '3': $spacing-unit * 3,
+  '4': $spacing-unit * 4,
+  '5': $spacing-unit * 5,
+  '6': $spacing-unit * 6,
+  '8': $spacing-unit * 8,
+  '10': $spacing-unit * 10,
+  '12': $spacing-unit * 12,
+  '16': $spacing-unit * 16,
+  '20': $spacing-unit * 20,
+  '24': $spacing-unit * 24,
+  '32': $spacing-unit * 32
+);
+
+// 断点系统
+$breakpoints: (
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+);
+
+// Z-index系统
+$z-index: (
+  'base': 1,
+  'dropdown': 1000,
+  'sticky': 1020,
+  'fixed': 1030,
+  'modal': 1040,
+  'popover': 1050,
+  'tooltip': 1060
+);
+
+// 动画时间
+$transition-duration: (
+  'fast': 150ms,
+  'normal': 250ms,
+  'slow': 350ms
+);
+
+// 动画曲线
+$transition-timing: (
+  'ease-in-out': cubic-bezier(0.4, 0, 0.2, 1),
+  'ease-out': cubic-bezier(0, 0, 0.2, 1),
+  'ease-in': cubic-bezier(0.4, 0, 1, 1)
+);
+
+// 阴影系统
+$shadows: (
+  'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+  'md': '0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)',
+  'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
+  'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 10px 10px -5px rgba(0, 0, 0, 0.03)',
+  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.1)'
+);
+
+// 圆角系统
+$border-radius: (
+  'none': 0,
+  'sm': 0.125rem,
+  'md': 0.25rem,
+  'lg': 0.5rem,
+  'xl': 0.75rem,
+  '2xl': 1rem,
+  'full': 9999px
+); 
