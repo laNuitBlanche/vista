@@ -1,15 +1,31 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
-import { resolve } from 'path'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import { resolve } from 'path';
+import autoprefixer from 'autoprefixer';
+import AutoImport from 'unplugin-auto-import/vite';
+import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vanillaExtractPlugin()],
+  plugins: [
+    vue(),
+    vanillaExtractPlugin(),
+    AutoImport({
+      imports: ['vue', 'vue-router', 'pinia', '@vueuse/core'],
+      dts: 'src/types/auto-imports.d.ts',
+      dirs: ['src/composables/**', 'src/stores/**'],
+      vueTemplate: true,
+      eslintrc: {
+        enabled: true,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true,
+      },
+    }),
+  ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@components': resolve(__dirname, 'src/components'),
       '@views': resolve(__dirname, 'src/views'),
       '@stores': resolve(__dirname, 'src/stores'),
@@ -55,4 +71,4 @@ export default defineConfig({
     open: true,
     cors: true,
   },
-})
+});
