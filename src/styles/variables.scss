@@ -18,7 +18,7 @@
   --info-color-dark: #3994e6; // 信息色的深色变体
 
   // 亮色主题变量 (默认)
-  --bg-light: #f8fafc;  // 更柔和的背景色
+  --bg-light: #f8fafc; // 更柔和的背景色
   --text-light: #1e293b; // 更深的文字颜色
   --border-light: #e2e8f0; // 更精致的边框颜色
   --border-light-dark: #c0c7d0; // 亮色边框的深色变体
@@ -39,11 +39,14 @@
   --hover-color: var(--hover-light);
 
   // 字体系统 - 增加现代字体
-  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-family-code: 'JetBrains Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-family-code: 'JetBrains Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+
   // 增加标题字体
-  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 
   // 字体大小
   --font-size-base: 1rem;
@@ -52,8 +55,8 @@
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem; // 新增更大字号
-  --font-size-4xl: 2.25rem;  // 新增更大字号
-  --font-size-5xl: 3rem;     // 新增更大字号
+  --font-size-4xl: 2.25rem; // 新增更大字号
+  --font-size-5xl: 3rem; // 新增更大字号
 
   // 间距系统
   --spacing-unit: 0.25rem;
@@ -113,7 +116,7 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem; // 新增更大圆角
   --radius-full: 9999px;
-  
+
   // 新增卡片效果
   --card-border-radius: var(--radius-lg);
   --card-shadow: var(--shadow-md);
@@ -139,7 +142,15 @@ $breakpoint-xl: 1280px;
 $breakpoint-2xl: 1536px;
 
 // 字体系统
-$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-base:
+  'Inter',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
 $font-family-heading: $font-family-base;
 $font-family-code: 'JetBrains Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 
@@ -169,7 +180,7 @@ $spacing: (
   '16': $spacing-unit * 16,
   '20': $spacing-unit * 20,
   '24': $spacing-unit * 24,
-  '32': $spacing-unit * 32
+  '32': $spacing-unit * 32,
 );
 
 // 断点系统
@@ -178,7 +189,7 @@ $breakpoints: (
   'md': 768px,
   'lg': 1024px,
   'xl': 1280px,
-  '2xl': 1536px
+  '2xl': 1536px,
 );
 
 // Z-index系统
@@ -189,21 +200,21 @@ $z-index: (
   'fixed': 1030,
   'modal': 1040,
   'popover': 1050,
-  'tooltip': 1060
+  'tooltip': 1060,
 );
 
 // 动画时间
 $transition-duration: (
   'fast': 150ms,
   'normal': 250ms,
-  'slow': 350ms
+  'slow': 350ms,
 );
 
 // 动画曲线
 $transition-timing: (
   'ease-in-out': cubic-bezier(0.4, 0, 0.2, 1),
   'ease-out': cubic-bezier(0, 0, 0.2, 1),
-  'ease-in': cubic-bezier(0.4, 0, 1, 1)
+  'ease-in': cubic-bezier(0.4, 0, 1, 1),
 );
 
 // 阴影系统
@@ -212,7 +223,7 @@ $shadows: (
   'md': '0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04)',
   'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
   'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 10px 10px -5px rgba(0, 0, 0, 0.03)',
-  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.1)'
+  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.1)',
 );
 
 // 圆角系统
@@ -223,5 +234,5 @@ $border-radius: (
   'lg': 0.5rem,
   'xl': 0.75rem,
   '2xl': 1rem,
-  'full': 9999px
-); 
+  'full': 9999px,
+);

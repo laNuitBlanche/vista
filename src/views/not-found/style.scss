@@ -44,7 +44,8 @@
   justify-content: center;
   gap: var(--spacing-4);
 
-  .btn-primary, .btn-secondary {
+  .btn-primary,
+  .btn-secondary {
     padding: var(--spacing-3) var(--spacing-6);
     border-radius: var(--radius-md);
     font-weight: 500;
@@ -75,20 +76,21 @@
   .error-code {
     font-size: 6rem;
   }
-  
+
   .error-title {
     font-size: 2rem;
   }
-  
+
   .error-message {
     font-size: var(--font-size-base);
   }
-  
+
   .actions {
     flex-direction: column;
-    
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary {
       width: 100%;
     }
   }
-} 
+}

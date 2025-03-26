@@ -38,9 +38,9 @@
 </template>
 
 <script setup lang="ts">
-// 后续添加业务逻辑
+  // 后续添加业务逻辑
 </script>
 
 <style lang="scss" scoped>
-@use './style.scss';
+  @use './style.scss';
 </style>
