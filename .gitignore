@@ -1,14 +1,4 @@
-# 依赖
-node_modules
-.pnp
-.pnp.js
-
-# 构建产物
-dist
-dist-ssr
-*.local
-
-# 日志
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -17,7 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# 编辑器目录和文件
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -28,12 +23,5 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# 本地环境文件
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# 测试覆盖率
-coverage
+# pnpm
+.pnpm-store/
