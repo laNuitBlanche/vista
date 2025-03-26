@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export type ThemeMode = 'light' | 'dark'
 
@@ -9,7 +8,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   // 监听系统主题变化
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  mediaQuery.addEventListener('change', (e) => {
+  mediaQuery.addEventListener('change', e => {
     systemTheme.value = e.matches ? 'dark' : 'light'
     if (followingSystem.value) {
       setTheme(systemTheme.value)

@@ -15,9 +15,7 @@
             <div class="meta-item">
               <i class="icon-tags"></i>
               <span class="tags">
-                <span v-for="tag in article.tags" :key="tag" class="tag">{{
-                  tag
-                }}</span>
+                <span v-for="tag in article.tags" :key="tag" class="tag">{{ tag }}</span>
               </span>
             </div>
           </div>
@@ -85,39 +83,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+  interface Article {
+    id: string
+    title: string
+    excerpt: string
+    content: string
+    coverImage: string
+    publishedAt: string
+    categoryId: string
+    tags: string[]
+  }
 
-interface Article {
-  id: string
-  title: string
-  excerpt: string
-  content: string
-  coverImage: string
-  publishedAt: string
-  categoryId: string
-  tags: string[]
-}
+  interface Category {
+    id: string
+    name: string
+  }
 
-interface Category {
-  id: string
-  name: string
-}
+  const route = useRoute()
+  const router = useRouter()
+  const isLoading = ref(true)
+  const article = ref<Article | null>(null)
+  const isLiked = ref(false)
+  const likeCount = ref(0)
 
-const route = useRoute()
-const router = useRouter()
-const isLoading = ref(true)
-const article = ref<Article | null>(null)
-const isLiked = ref(false)
-const likeCount = ref(0)
-
-// 模拟文章数据
-const articles = [
-  {
-    id: '2',
-    title: '《塞尔达传说：王国之泪》深度评测',
-    excerpt: '任天堂再次突破开放世界游戏的边界，带来令人惊叹的游戏体验。',
-    content: `# 《塞尔达传说：王国之泪》深度评测
+  // 模拟文章数据
+  const articles = [
+    {
+      id: '2',
+      title: '《塞尔达传说：王国之泪》深度评测',
+      excerpt: '任天堂再次突破开放世界游戏的边界，带来令人惊叹的游戏体验。',
+      content: `# 《塞尔达传说：王国之泪》深度评测
 
 ## 游戏背景
 
@@ -138,16 +133,16 @@ const articles = [
 ## 总体评价
 
 《塞尔达传说：王国之泪》成功地在《荒野之息》的基础上进行了全方位的升级和创新，带来了更为广阔和深入的游戏体验。游戏不仅满足了老玩家的期待，也为系列带来了新的高度。`,
-    coverImage: 'https://source.unsplash.com/random/1200x600/?game',
-    publishedAt: '2023-05-20T10:30:00Z',
-    categoryId: 'gaming',
-    tags: ['游戏评测', 'Switch', '塞尔达'],
-  },
-  {
-    id: '3',
-    title: '摄影入门：构图技巧详解',
-    excerpt: '掌握这些基本构图技巧，让你的照片更加专业和吸引人。',
-    content: `# 摄影入门：构图技巧详解
+      coverImage: 'https://source.unsplash.com/random/1200x600/?game',
+      publishedAt: '2023-05-20T10:30:00Z',
+      categoryId: 'gaming',
+      tags: ['游戏评测', 'Switch', '塞尔达'],
+    },
+    {
+      id: '3',
+      title: '摄影入门：构图技巧详解',
+      excerpt: '掌握这些基本构图技巧，让你的照片更加专业和吸引人。',
+      content: `# 摄影入门：构图技巧详解
 
 ## 三分法则
 
@@ -172,17 +167,16 @@ const articles = [
 ## 总结
 
 构图是摄影中最基础也最重要的技巧之一。通过练习和尝试不同的构图方式，你可以找到最适合表达你想法的构图方式。记住，规则是用来打破的，有时最不寻常的构图可能会创造出最令人印象深刻的照片。`,
-    coverImage: 'https://source.unsplash.com/random/1200x600/?photography',
-    publishedAt: '2023-04-10T14:20:00Z',
-    categoryId: 'life',
-    tags: ['摄影', '构图', '入门教程'],
-  },
-  {
-    id: '4',
-    title: '《进击的巨人》最终季评析',
-    excerpt:
-      '长达多年的史诗级动漫终于迎来结局，一起来回顾这部作品带给我们的震撼与思考。',
-    content: `# 《进击的巨人》最终季评析
+      coverImage: 'https://source.unsplash.com/random/1200x600/?photography',
+      publishedAt: '2023-04-10T14:20:00Z',
+      categoryId: 'life',
+      tags: ['摄影', '构图', '入门教程'],
+    },
+    {
+      id: '4',
+      title: '《进击的巨人》最终季评析',
+      excerpt: '长达多年的史诗级动漫终于迎来结局，一起来回顾这部作品带给我们的震撼与思考。',
+      content: `# 《进击的巨人》最终季评析
 
 ## 剧情发展
 
@@ -207,80 +201,78 @@ WIT工作室和MAPPA工作室各自以不同的风格呈现了精彩的画面。
 ## 总体评价
 
 作为一部现象级动漫，《进击的巨人》成功地通过一个架空的奇幻故事探讨了人性和社会的本质问题。尽管最终季和结局存在一些争议，但无法否认的是，这是一部会在动漫史上留下浓墨重彩一笔的作品。`,
-    coverImage: 'https://source.unsplash.com/random/1200x600/?anime',
-    publishedAt: '2023-03-05T20:00:00Z',
-    categoryId: 'anime',
-    tags: ['动漫评测', '进击的巨人', '剧情分析'],
-  },
-]
+      coverImage: 'https://source.unsplash.com/random/1200x600/?anime',
+      publishedAt: '2023-03-05T20:00:00Z',
+      categoryId: 'anime',
+      tags: ['动漫评测', '进击的巨人', '剧情分析'],
+    },
+  ]
 
-// 模拟分类数据
-const categories = [
-  { id: 'tech', name: '技术' },
-  { id: 'gaming', name: '游戏' },
-  { id: 'life', name: '生活' },
-  { id: 'anime', name: '动漫' },
-]
+  // 模拟分类数据
+  const categories = [
+    { id: 'tech', name: '技术' },
+    { id: 'gaming', name: '游戏' },
+    { id: 'life', name: '生活' },
+    { id: 'anime', name: '动漫' },
+  ]
 
-// 获取文章索引
-const articleIndex = computed(() => {
-  return articles.findIndex((a) => a.id === route.params.id)
-})
-
-// 获取上一篇文章
-const prevArticle = computed(() => {
-  return articleIndex.value > 0 ? articles[articleIndex.value - 1] : null
-})
-
-// 获取下一篇文章
-const nextArticle = computed(() => {
-  return articleIndex.value < articles.length - 1
-    ? articles[articleIndex.value + 1]
-    : null
-})
-
-// 点赞功能
-const toggleLike = () => {
-  isLiked.value = !isLiked.value
-  if (isLiked.value) {
-    likeCount.value++
-  } else {
-    likeCount.value--
-  }
-}
-
-// 获取分类名称
-const getCategoryName = (categoryId: string): string => {
-  const category = categories.find((cat) => cat.id === categoryId)
-  return category ? category.name : '未分类'
-}
-
-// 日期格式化
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+  // 获取文章索引
+  const articleIndex = computed(() => {
+    return articles.findIndex(a => a.id === route.params.id)
   })
-}
 
-// 加载文章数据
-onMounted(async () => {
-  // 模拟 API 请求
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  // 获取上一篇文章
+  const prevArticle = computed(() => {
+    return articleIndex.value > 0 ? articles[articleIndex.value - 1] : null
+  })
 
-  const fetchedArticle = articles.find((a) => a.id === route.params.id)
-  if (fetchedArticle) {
-    article.value = fetchedArticle
-    // 模拟初始点赞数
-    likeCount.value = Math.floor(Math.random() * 100)
+  // 获取下一篇文章
+  const nextArticle = computed(() => {
+    return articleIndex.value < articles.length - 1 ? articles[articleIndex.value + 1] : null
+  })
+
+  // 点赞功能
+  const toggleLike = () => {
+    isLiked.value = !isLiked.value
+    if (isLiked.value) {
+      likeCount.value++
+    } else {
+      likeCount.value--
+    }
   }
 
-  isLoading.value = false
-})
+  // 获取分类名称
+  const getCategoryName = (categoryId: string): string => {
+    const category = categories.find(cat => cat.id === categoryId)
+    return category ? category.name : '未分类'
+  }
+
+  // 日期格式化
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
+  // 加载文章数据
+  onMounted(async () => {
+    // 模拟 API 请求
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    const fetchedArticle = articles.find(a => a.id === route.params.id)
+    if (fetchedArticle) {
+      article.value = fetchedArticle
+      // 模拟初始点赞数
+      likeCount.value = Math.floor(Math.random() * 100)
+    }
+
+    isLoading.value = false
+  })
 </script>
 
 <style lang="scss" scoped>
-@use './style.scss';
+  @use './style.scss';
 </style>
