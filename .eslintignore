@@ -1,0 +1,21 @@
+# 依赖
+node_modules
+.pnp
+.pnp.js
+
+# 构建产物
+dist
+dist-ssr
+*.local
+
+# 类型声明
+*.d.ts
+
+# 配置文件
+*.config.js
+*.config.ts
+vite.config.ts
+
+# 其他
+coverage
+public 
